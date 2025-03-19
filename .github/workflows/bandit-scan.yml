@@ -16,10 +16,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Bandit Python Security Scan
-        uses: shundor/bandit-action@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          path: "."
-          level: high
-          confidence: high
-          exit_zero: true
+          python-version: "3.12"  # Updated to Python 3.12.3
+
+      - name: Install Bandit
+        run: |
+          python -m pip install --upgrade pip
+          pip install bandit
+
+      - name: Run Bandit Scan
+        run: |
+          bandit -r assignment1_code_sample.py
+
