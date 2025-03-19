@@ -1,6 +1,6 @@
 import os
-import pymysql
 from urllib.request import urlopen
+import pymysql
 
 
 db_config = {"host": "mydatabase.com", "user": "admin", "password": "secret123"}
@@ -36,3 +36,4 @@ if __name__ == "__main__":
     data = get_data()
     save_to_db(data)
     send_email("admin@example.com", "User Input", user_input)
+
