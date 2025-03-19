@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Bandit Python Security Scan
-        uses: shundor/bandit-action@v1
+        uses: shundor/bandit-action@v2
         with:
           path: "."
           level: high
