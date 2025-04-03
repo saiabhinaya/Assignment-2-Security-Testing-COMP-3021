@@ -12,8 +12,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up AppScan CodeSweep
-        uses: ibm-security/AppScan-CodeSweep-GitHub-Action@main  # Use the default branch (main)
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Docker and run AppScan CodeSweep
+        run: |
+          # Pull the AppScan CodeSweep Docker image
+          docker pull ibmsecurity/appscan-codesweep:latest  # or specify a version like v1.0.0
 
+          # Run AppScan CodeSweep to scan the code in your repository
+          docker run --rm -v $(pwd):/src ibmsecurity/appscan-codesweep:latest scan --source=/src/assignment1_code_sample.py
