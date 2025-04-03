@@ -11,25 +11,32 @@ def get_user_input():
     return user_input
 
 
-def send_email(to, subject, body):
-    os.system(f'echo {body} | mail -s "{subject}" {to}')
+import subprocess
 
+def send_email(to, subject, body):
+    subprocess.run(["mail", "-s", subject, to], input=body.encode())
+
+
+from urllib.parse import urlparse
+from urllib.request import urlopen
 
 def get_data():
     url = "http://insecure-api.com/get-data"
+    parsed_url = urlparse(url)
+    if parsed_url.scheme not in ['http', 'https']:
+        raise ValueError("Unsafe URL scheme detected.")
     data = urlopen(url).read().decode()
     return data
 
 
 def save_to_db(data):
-    query = f"INSERT INTO mytable (column1, column2) VALUES ('{data}', 'Another Value')"
+    query = "INSERT INTO mytable (column1, column2) VALUES (%s, %s)"
     connection = pymysql.connect(**db_config)
     cursor = connection.cursor()
-    cursor.execute(query)
+    cursor.execute(query, (data, 'Another Value'))
     connection.commit()
     cursor.close()
     connection.close()
-
 
 if __name__ == "__main__":
     user_input = get_user_input()
