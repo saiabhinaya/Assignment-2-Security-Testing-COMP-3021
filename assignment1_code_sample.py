@@ -14,7 +14,7 @@ def get_user_input():
 import subprocess
 
 def send_email(to, subject, body):
-    subprocess.run(["mail", "-s", subject, to], input=body.encode())
+    subprocess.run(["/usr/bin/mail", "-s", subject, to], input=body.encode()) # nosec
 
 
 from urllib.parse import urlparse
